@@ -1,11 +1,11 @@
 class AudioController {
   constructor() {
-    this.bgMusic = new Audio("audio/the-forest-of-good-and-evil-2947.mp3");
-    this.flipSound = new Audio("audio/sfx-boing12-cut.mp3");
-    this.matchSound = new Audio("audio/SF-ok-cut.mp3");
-    this.victorySound = new Audio("audio/sfx-victory6.mp3");
+    this.bgMusic = new Audio('audio/the-forest-of-good-and-evil-2947.mp3');
+    this.flipSound = new Audio('audio/sfx-boing12-cut.mp3');
+    this.matchSound = new Audio('audio/success-1-6297.mp3');
+    this.victorySound = new Audio('audio/sfx-victory6.mp3');
     this.gameOverSound = new Audio(
-      "audio/mixkit-little-piano-game-over-1944.wav"
+      'audio/mixkit-little-piano-game-over-1944.wav'
     );
     this.bgMusic.volume = 0.5;
     this.bgMusic.loop = true;
@@ -40,8 +40,8 @@ class MatchTheCard {
     this.cardsArray = cards;
     this.totalTime = totalTime;
     this.timeRemaining = totalTime;
-    this.timer = document.getElementById("time-remaining");
-    this.ticker = document.getElementById("flips");
+    this.timer = document.getElementById('time-remaining');
+    this.ticker = document.getElementById('flips');
     this.audioController = new AudioController();
   }
 
@@ -77,21 +77,20 @@ class MatchTheCard {
   gameOver() {
     clearInterval(this.countdown);
     this.audioController.gameOver();
-    document.getElementById("game-over-text").classList.add("visible");
+    document.getElementById('game-over-text').classList.add('visible');
   }
 
   victory() {
     clearInterval(this.countdown);
     this.audioController.victory();
-    document.getElementById("victory-text").classList.add("visible");
+    document.getElementById('victory-text').classList.add('visible');
   }
 
   hideCards() {
     this.cardsArray.forEach((card) => {
-      card.classList.remove("visible");
+      card.classList.remove('visible');
     });
   }
-
 
   checkCardForMatch(card) {
     if (this.getCardType(card) === this.getCardType(this.cardToCheck))
@@ -102,7 +101,7 @@ class MatchTheCard {
   }
 
   getCardType(card) {
-    return card.querySelectorAll(".card-value")[0].src;
+    return card.querySelectorAll('.card-value')[0].src;
   }
 
   cardMatch(card1, card2) {
@@ -115,10 +114,10 @@ class MatchTheCard {
   cardMissMatch(card1, card2) {
     this.busy = true;
     setTimeout(() => {
-      card1.classList.remove("visible");
-      card2.classList.remove("visible");
+      card1.classList.remove('visible');
+      card2.classList.remove('visible');
       this.busy = false;
-    }, 1000)
+    }, 1000);
   }
 
   shuffleCards() {
@@ -129,14 +128,13 @@ class MatchTheCard {
     }
   }
 
-
   flipCard(card) {
     if (this.canFlipCard(card)) {
       this.audioController.flip();
       this.totalClicks++;
       this.ticker.innerText = this.totalClicks;
-      card.classList.add("visible");
-      
+      card.classList.add('visible');
+
       if (this.cardToCheck) {
         this.checkCardForMatch(card);
       } else {
@@ -152,27 +150,26 @@ class MatchTheCard {
       card !== this.cardToCheck
     );
   }
-
 }
 
-if (document.readyState === "loading")
-  document.addEventListener("DOMContentLoaded", ready());
+if (document.readyState === 'loading')
+  document.addEventListener('DOMContentLoaded', ready());
 else ready();
 
 function ready() {
-  let overlays = Array.from(document.querySelectorAll(".overlay-text"));
-  let cards = Array.from(document.querySelectorAll(".card"));
+  let overlays = Array.from(document.querySelectorAll('.overlay-text'));
+  let cards = Array.from(document.querySelectorAll('.card'));
   let game = new MatchTheCard(100, cards);
 
   overlays.forEach((overlay) => {
-    overlay.addEventListener("click", () => {
-      overlay.classList.remove("visible");
+    overlay.addEventListener('click', () => {
+      overlay.classList.remove('visible');
       game.startGame();
     });
   });
 
   cards.forEach((card) => {
-    card.addEventListener("click", () => {
+    card.addEventListener('click', () => {
       game.flipCard(card);
     });
   });
